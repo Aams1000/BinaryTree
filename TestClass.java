@@ -35,6 +35,10 @@ public class TestClass {
 		node.print();
 		node.setParent(secondNode);
 		node.getParent().print();
+
+		BinaryTree tree = new BinaryTree();
+		tree.add(node);
+		tree.add(secondNode);
 	}
 
 	/* THE CAKE IS A LIE. */

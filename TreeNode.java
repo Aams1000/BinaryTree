@@ -7,9 +7,9 @@
 
         /*
 
-        Description:    A RouletteWheel for easy roulette selection in genetic algorithms. Constructor takes an ArrayList of fitness values,
-        				which are used to form a wheel of probabilities. The selectValue() and selectAndRemove() methods generate a random
-        				value and return the index of the corresponding individual. The remove() and selectAndRemove() methods remove an individual
+        Description:    A RouletteWheel for easy roulette selection in genetic algorithms. Constructor takes an ArrayList of fitness keys,
+        				which are used to form a wheel of probabilities. The selectKey() and selectAndRemove() methods generate a random
+        				key and return the index of the corresponding individual. The remove() and selectAndRemove() methods remove an individual
         				(the latter after it has been selected) and reconstruct the wheel. Class tracks sum of fitnesses and includes basic
         				ArrayList functionality for the wheel. Class can also be used for general probabilistic selection and roulette wheel
         				functionality.
@@ -26,16 +26,20 @@ public class TreeNode {
 	//random number generator
 	private final Random rand = new Random();
 
-	//height and value of initialized node
+	//height and key of initialized node
 	private final int INITIAL_HEIGHT = -1;
-	private final double INITIAL_VALUE = Double.NEGATIVE_INFINITY;
+	private final double INITIAL_KEY = Double.NEGATIVE_INFINITY;
+	private final int INITIAL_IDENTIFIER = Integer.MIN_VALUE;
+	private final int INITIAL_VALUE = Double.NEGATIVE_INFINITY;
 
 	//variables contained in each node
+	private double key;
 	private double value;
 	private int height;
 	private TreeNode parent;
 	private TreeNode right;
 	private TreeNode left;
+	private int identifier;
 
 	//first constructor takes no parameters
 	public TreeNode(){
@@ -45,37 +49,69 @@ public class TreeNode {
 		right = null;
 		left = null;
 
-		//initialize height and value to INITIAL_HEIGHT and NEGATIVE_INFINITY respectively
+		//initialize height and key to INITIAL_HEIGHT and NEGATIVE_INFINITY respectively
 		height = INITIAL_HEIGHT;
+		key = INITIAL_KEY;
 		value = INITIAL_VALUE;
+		identifier = INITIAL_IDENTIFIER;
 	}
 
-	//constructor takes node's value as parameter
-	public TreeNode(double val){
+	//constructor takes node's key as parameter
+	public TreeNode(double nodeKey, double val){
 
 		//initialize parent and children to null
 		parent = null;
 		right = null;
 		left = null;
 
-		//initialize height and value to INITIAL_HEIGHT and NEGATIVE_INFINITY respectively
+		//initialize height and key to INITIAL_HEIGHT and NEGATIVE_INFINITY respectively
 		height = INITIAL_HEIGHT;
+		identifier = INITIAL_IDENTIFIER;
+		key = nodeKey;
 		value = val;
 	}
 
-	//print function prints out height and value
+	//constructor takes node's key and identifier as parameters
+	public TreeNode(double nodeKey, double val, int ident){
+
+		//initialize parent and children to null
+		parent = null;
+		right = null;
+		left = null;
+
+		//initialize height to INITIAL_HEIGHT and key and value to parameter values
+		height = INITIAL_HEIGHT;
+		identifier = ident;
+		key = nodeKey;
+		value = val;
+	}
+
+	//print function prints out height and key
 	public void print(){
+		System.out.println("Node: " + identifier);
 		System.out.println("Height: " + height);
+		System.out.println("Key: " + key);
 		System.out.println("Value: " + value);
 	}
 
 	//getter functions
-	public double getValue(){
-		return value;
+	public double getKey(){
+		return key;
 	}
 
 	public int getHeight(){
 		return height;
+	}
+
+	public double getValue(){
+		return value;
+	}
+
+	public int getIdentifier(){
+		if (identifier == INITIAL_IDENTIFIER){
+			System.out.println("Warning: identifier has not been initialized.");
+		}
+		return identifier;
 	}
 
 	public TreeNode getParent(){
@@ -91,12 +127,20 @@ public class TreeNode {
 	}
 
 	//setter functions
-	public void setValue(double val){
-		value = val;
+	public void setKey(double newKey){
+		key = newKey;
 	}
 
 	public void setHeight(int newHeight){
 		height = newHeight;
+	}
+
+	public void setValue(double val){
+		value = val;
+	}
+
+	public void setIdentifier(int ident){
+		identifier = ident;
 	}
 
 	public void setParent(TreeNode newParent){
