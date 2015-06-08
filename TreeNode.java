@@ -30,7 +30,7 @@ public class TreeNode {
 	private final int INITIAL_HEIGHT = -1;
 	private final double INITIAL_KEY = Double.NEGATIVE_INFINITY;
 	private final int INITIAL_IDENTIFIER = Integer.MIN_VALUE;
-	private final int INITIAL_VALUE = Double.NEGATIVE_INFINITY;
+	private final double INITIAL_VALUE = Double.NEGATIVE_INFINITY;
 
 	//variables contained in each node
 	private double key;
@@ -92,6 +92,39 @@ public class TreeNode {
 		System.out.println("Height: " + height);
 		System.out.println("Key: " + key);
 		System.out.println("Value: " + value);
+		System.out.println();
+	}
+
+	//equals function compares key, value, and identifier for equality. Takes TreeNode as parameter, returns appropriate boolean value
+	public boolean equals(TreeNode node){
+		if (node.getKey() == key && node.getValue() == value && node.getIdentifier() == identifier)
+			return true;
+		return false;
+	}
+
+	//appearsUninitialized function checks if key value is set to INITIAL_KEY or INITIAL_VALUE.
+	//Takes no parameters, prints warnings and returns appropriate boolean value
+	public boolean appearsUninitialized(){
+		boolean uninitialized = false;
+		if (key == INITIAL_KEY){
+			if (identifier != INITIAL_IDENTIFIER){
+				System.out.println("Warning: node " + identifier + " key might not have been initialied.");
+			}
+			else{
+				System.out.println("Warning: node key might not have been initialied.");
+			}
+			uninitialized = true;
+		}
+		if (value == INITIAL_VALUE){
+			if (identifier != INITIAL_IDENTIFIER){
+				System.out.println("Warning: node " + identifier + " value might not have been initialized.");
+			}
+			else{
+				System.out.println("Warning: node value might not have been initialized.");
+			}
+			uninitialized = true;
+		}
+		return uninitialized;
 	}
 
 	//getter functions
@@ -109,7 +142,7 @@ public class TreeNode {
 
 	public int getIdentifier(){
 		if (identifier == INITIAL_IDENTIFIER){
-			System.out.println("Warning: identifier has not been initialized.");
+			System.out.println("Warning: identifier might not have been initialized.");
 		}
 		return identifier;
 	}

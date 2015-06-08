@@ -8,7 +8,7 @@
         /*
 
         Description:    A RouletteWheel for easy roulette selection in genetic algorithms. Constructor takes an ArrayList of fitness values,
-        				which are used to form a wheel of probabilities. The selectValue() and selectAndRemove() methods generate a random
+        				which are used to form a wheel of probabilities. The selectKey() and selectAndRemove() methods generate a random
         				value and return the index of the corresponding individual. The remove() and selectAndRemove() methods remove an individual
         				(the latter after it has been selected) and reconstruct the wheel. Class tracks sum of fitnesses and includes basic
         				ArrayList functionality for the wheel. Class can also be used for general probabilistic selection and roulette wheel
@@ -34,15 +34,17 @@ public class BinaryTree{
                 root = null;
         }
 
-        //add function takes TreeNode as parameter, returns void. If root is null, make node root,
+        //insert function takes TreeNode as parameter, returns void. If root is null, make node root,
         //otherwise places it in appropriate location
-        public void add(TreeNode node){
+        public void insert(TreeNode node){
 
                 //make sure node has been initialized
                 if (node == null){
-                        System.out.println("Warning: added node is null.");
+                        System.out.println("Warning: inserted node is null.");
                         return;
                 }
+                //print warnings if node appears uninitialized
+                node.appearsUninitialized();
 
                 //if tree is empty, set root to node
                 if (root == null){
@@ -51,16 +53,16 @@ public class BinaryTree{
                         return;
                 }
 
-                //add node to important
-                recursiveAdd(root, node);
+                //insert node to important
+                recursiveInsert(root, node);
         }
 
-        //recursiveAdd function called by add function. Takes node to add and current node to examine as parameters
-        //traverses tree until finding the appropriate location to add node
-        private void recursiveAdd(TreeNode curr, TreeNode newNode){
+        //recursiveInsert function called by insert function. Takes node to insert and current node to examine as parameters
+        //traverses tree until finding the appropriate location to insert node
+        private void recursiveInsert(TreeNode curr, TreeNode newNode){
 
-                //if newNode's value is less than or equal to curr's value
-                if (newNode.getValue() <= curr.getValue()){        
+                //if newNode's key is less than or equal to curr's key
+                if (newNode.getKey() <= curr.getKey()){        
                         //check if we've reached a leaf
                         if (curr.getLeft() == null){
                                 curr.setLeft(newNode);
@@ -68,7 +70,7 @@ public class BinaryTree{
                                 size++;
                         }            
                         else{
-                                recursiveAdd(curr.getLeft(), newNode);
+                                recursiveInsert(curr.getLeft(), newNode);
                         }
                 }
                 //node's key is greater than curr's key
@@ -79,9 +81,35 @@ public class BinaryTree{
                                 size++;
                         }
                         else{
-                                recursiveAdd(curr.getRight(), newNode);
+                                recursiveInsert(curr.getRight(), newNode);
                         }
                 }
+        }
+
+        //delete function takes node, deletes it from tree and rearranges branches accordingly
+        public void delete(TreeNode node){
+
+                //make sure node isn't null, has been initialized
+                if (node == null){
+                        System.out.println("Warning: node is null.");
+                        return;
+                }
+                node.appearsUninitialized();
+
+                recursiveDelete(root, node);
+        }
+
+        //recursiveDelete function called by delete function. Takes node to delete and current node to examine as parameters
+        //traverses tree until finding the appropriate  to insert node
+        private void recursiveDelete(TreeNode curr, TreeNode newNode){
+                
+        }
+
+
+
+        //size funciton returns number of nodes in tree. Takes no parameters, returns int
+        public int size(){
+                return size;
         }
 
 

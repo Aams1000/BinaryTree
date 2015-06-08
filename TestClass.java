@@ -27,18 +27,24 @@ public class TestClass {
 
 		//test TreeNode constructors
 		TreeNode node = new TreeNode();
-		node.print();
-		TreeNode secondNode = new TreeNode(5);
-		secondNode.print();
-		node.setValue(15);
-		node.setHeight(4);
-		node.print();
-		node.setParent(secondNode);
-		node.getParent().print();
+		TreeNode secondNode = new TreeNode(5, 10);
+		TreeNode thirdNode = new TreeNode(4, 4, 15);
+		//node.print();
+		// secondNode.print();
+		// thirdNode.print();
+		// node.setValue(2);
+		// node.setHeight(4);
+		// node.setKey(6);
+		// node.print();
+		// node.setParent(secondNode);
+		// node.getParent().print();
 
 		BinaryTree tree = new BinaryTree();
-		tree.add(node);
-		tree.add(secondNode);
+		tree.insert(secondNode);
+		tree.insert(thirdNode);
+		thirdNode.getParent().print();
+		secondNode.getLeft().print();
+		tree.delete(secondNode);
 	}
 
 	/* THE CAKE IS A LIE. */
