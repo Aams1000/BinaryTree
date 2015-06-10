@@ -102,6 +102,32 @@ public class TreeNode {
 		return false;
 	}
 
+	//detach function removes all pointers to and from node, returns void
+	public void detach(){
+
+		//find if node is parent's right or left child
+		if (parent != null){
+			if (parent.getLeft().equals(this)){
+				parent.setLeft(null);
+			}
+			else{
+				parent.setRight(null);
+			}
+		}
+
+		//detach children
+		if (left != null){
+			left.setParent(null);
+		}
+		if (right != null){
+			right.setParent(null);
+		}
+		parent = null;
+		left = null;
+		right = null;
+	}
+
+
 	//appearsUninitialized function checks if key value is set to INITIAL_KEY or INITIAL_VALUE.
 	//Takes no parameters, prints warnings and returns appropriate boolean value
 	public boolean appearsUninitialized(){

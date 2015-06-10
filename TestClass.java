@@ -29,6 +29,17 @@ public class TestClass {
 		TreeNode node = new TreeNode();
 		TreeNode secondNode = new TreeNode(5, 10);
 		TreeNode thirdNode = new TreeNode(4, 4, 15);
+		secondNode.setParent(thirdNode);
+		thirdNode.setLeft(secondNode);
+		secondNode.getParent().print();
+		thirdNode.getLeft().print();
+		secondNode.detach();
+		if (secondNode.getParent() == null){
+			System.out.println("SecondNode parent is null.");
+		}
+		if (thirdNode.getLeft() == null){
+			System.out.println("ThirdNode left is null.");
+		}
 		//node.print();
 		// secondNode.print();
 		// thirdNode.print();
@@ -39,12 +50,12 @@ public class TestClass {
 		// node.setParent(secondNode);
 		// node.getParent().print();
 
-		BinaryTree tree = new BinaryTree();
-		tree.insert(secondNode);
-		tree.insert(thirdNode);
-		thirdNode.getParent().print();
-		secondNode.getLeft().print();
-		tree.delete(secondNode);
+		// BinaryTree tree = new BinaryTree();
+		// tree.insert(secondNode);
+		// tree.insert(thirdNode);
+		// thirdNode.getParent().print();
+		// secondNode.getLeft().print();
+		//tree.delete(secondNode);
 	}
 
 	/* THE CAKE IS A LIE. */

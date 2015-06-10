@@ -45,7 +45,6 @@ public class BinaryTree{
                 }
                 //print warnings if node appears uninitialized
                 node.appearsUninitialized();
-
                 //if tree is empty, set root to node
                 if (root == null){
                         root = node;
@@ -95,16 +94,45 @@ public class BinaryTree{
                         return;
                 }
                 node.appearsUninitialized();
-
                 recursiveDelete(root, node);
         }
 
         //recursiveDelete function called by delete function. Takes node to delete and current node to examine as parameters
-        //traverses tree until finding the appropriate  to insert node
-        private void recursiveDelete(TreeNode curr, TreeNode newNode){
+        //traverses tree until finding the appropriate to insert node
+        private void recursiveDelete(TreeNode curr, TreeNode node){
                 
+                //check if we've found our node
+                if (node.equals(curr)){
+                        remove(curr);
+                        return;
+                }
+                //recurse either on right or left child
+                else if (node.getKey() <= curr.getKey() && curr.getLeft() != null){
+                        recursiveDelete(curr.getLeft(), node);
+                }
+                else if (curr.getRight() != null){
+                        recursiveDelete(curr.getRight(), node);
+                }
+                else{ //error
+                        System.out.println("Error: node not contained in tree.");
+                }
         }
 
+        //remove function called by by recursiveDelete function to take a node out of the tree. Takes node to delete as parameter,
+        //restructures tree depending on how many children it has. Returns void
+        private void remove(TreeNode node){
+
+                //node has no children
+                if (node.getLeft() == null && node.getRight() == null){
+                        node.detach();
+                }
+
+                //node has one left child
+
+                //node has one right child
+
+                //node has two children
+        }
 
 
         //size funciton returns number of nodes in tree. Takes no parameters, returns int
