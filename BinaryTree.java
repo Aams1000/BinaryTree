@@ -122,14 +122,35 @@ public class BinaryTree{
         //restructures tree depending on how many children it has. Returns void
         private void remove(TreeNode node){
 
+                TreeNode parent = node.getParent();
+                TreeNode left = node.getLeft();
+                TreeNode right = node.getRight();
                 //node has no children
-                if (node.getLeft() == null && node.getRight() == null){
+                if (left == null && right == null){
                         node.detach();
                 }
-
                 //node has one left child
-
+                else if (right == null){
+                        //replace node with child
+                        if (parent.getLeft().equals(node)){
+                                parent.setLeft(left);
+                        }
+                        else{
+                                parent.setRight(left);
+                        }
+                        node.detach();
+                }
                 //node has one right child
+                else if (left == null){
+                        //replace node with child
+                        if (parent.getLeft().equals(node)){
+                                parent.setLeft(right);
+                        }
+                        else{
+                                parent.setRight(right);
+                        }
+                        node.detach();
+                }
 
                 //node has two children
         }

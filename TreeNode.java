@@ -110,16 +110,16 @@ public class TreeNode {
 			if (parent.getLeft().equals(this)){
 				parent.setLeft(null);
 			}
-			else{
+			else if(parent.getRight().equals(this)){
 				parent.setRight(null);
 			}
 		}
 
 		//detach children
-		if (left != null){
+		if (left != null && left.getParent().equals(this)){
 			left.setParent(null);
 		}
-		if (right != null){
+		if (right != null && right.getParent().equals(this)){
 			right.setParent(null);
 		}
 		parent = null;
