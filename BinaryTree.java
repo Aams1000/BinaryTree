@@ -1,18 +1,16 @@
 	/****************************************
          *                                      *
-         *               Tree Node              *
+         *             Binary Tree              *
          *         Andrew Miller-Smith          *
          *                                      *
          ****************************************/
 
         /*
 
-        Description:    A RouletteWheel for easy roulette selection in genetic algorithms. Constructor takes an ArrayList of fitness values,
-        				which are used to form a wheel of probabilities. The selectKey() and selectAndRemove() methods generate a random
-        				value and return the index of the corresponding individual. The remove() and selectAndRemove() methods remove an individual
-        				(the latter after it has been selected) and reconstruct the wheel. Class tracks sum of fitnesses and includes basic
-        				ArrayList functionality for the wheel. Class can also be used for general probabilistic selection and roulette wheel
-        				functionality.
+        Description:    Description:    Java contains no BinaryTree object, which requires building new structures or modifying old ones whenever such a tree is needed.
+                                        This TreeNode class intends to serve as a basic BST that can be easily adjusted to contain any type of object. Final product
+                                        will contain all user-functionality of a standard Java class. This is currently a work in progress and is not ready for
+                                        general use.
 
         				Copyright 2015, Andrew Miller-Smith. Class is free for non-commercial use. For commercial use, inquire at amillers@bowdoin.edu.
 
@@ -20,6 +18,7 @@
 
 import java.util.*;
 import java.util.Random;
+import java.lang.Math;
 
 public class BinaryTree{
 
@@ -32,6 +31,11 @@ public class BinaryTree{
         //constructor takes no parameters, initializes root to null
         public BinaryTree(){
                 root = null;
+        }
+
+        //getRoot function returns root
+        public TreeNode getRoot(){
+                return root;
         }
 
         //insert function takes TreeNode as parameter, returns void. If root is null, make node root,
@@ -95,12 +99,20 @@ public class BinaryTree{
                 }
                 node.appearsUninitialized();
                 recursiveDelete(root, node);
+                size--;
         }
 
         //recursiveDelete function called by delete function. Takes node to delete and current node to examine as parameters
         //traverses tree until finding the appropriate to insert node
         private void recursiveDelete(TreeNode curr, TreeNode node){
                 
+                if (curr == null){
+                        System.out.println("Error: trying to delete null node.");
+                        return;
+                }
+                if (node == null){
+                        System.out.println ("Error: node to delete is null.");
+                }
                 //check if we've found our node
                 if (node.equals(curr)){
                         remove(curr);
@@ -110,7 +122,7 @@ public class BinaryTree{
                 else if (node.getKey() <= curr.getKey() && curr.getLeft() != null){
                         recursiveDelete(curr.getLeft(), node);
                 }
-                else if (curr.getRight() != null){
+                else if (node.getKey() > curr.getKey() && curr.getRight() != null){
                         recursiveDelete(curr.getRight(), node);
                 }
                 else{ //error
@@ -125,6 +137,30 @@ public class BinaryTree{
                 TreeNode parent = node.getParent();
                 TreeNode left = node.getLeft();
                 TreeNode right = node.getRight();
+                //node is root
+                if (parent == null){
+                        if (right != null){
+                                //replace root with leftmost child of right subtree
+                                TreeNode curr = right;
+                                while (curr.getLeft() != null){
+                                        curr = curr.getLeft();
+                                }
+                                node.copyValues(curr);
+                                curr.detach();
+                                return;
+                        }
+                        //make left child the root
+                        else if (left != null){
+                                root = left;
+                                node.detach();
+                                return;
+                        }
+                        //tree contains only root
+                        else{
+                                root = null;
+                                return;
+                        }
+                }
                 //node has no children
                 if (left == null && right == null){
                         node.detach();
@@ -132,7 +168,7 @@ public class BinaryTree{
                 //node has one left child
                 else if (right == null){
                         //replace node with child
-                        if (parent.getLeft().equals(node)){
+                        if (parent.getLeft() != null && parent.getLeft().equals(node)){
                                 parent.setLeft(left);
                         }
                         else{
@@ -151,14 +187,90 @@ public class BinaryTree{
                         }
                         node.detach();
                 }
-
                 //node has two children
+                else{
+                        //replace node with leftmost node on right subtree
+                        TreeNode curr = right;
+                        while (curr.getLeft() != null){
+                                curr = curr.getLeft();
+                        }
+                        node.copyValues(curr);
+                        curr.detach();
+                }
         }
 
+        //isHeightBalanced function checks if any two leaves differ in height by one. Returns appropriate boolean value
+        public boolean isHeightBalanced(){
+                if (getMaxHeight() - getMinHeight() > 1)
+                        return false;
+                return true;
+        }
 
-        //size funciton returns number of nodes in tree. Takes no parameters, returns int
+        //getMinHeight function returns min height of leaves on the tree. Takes no parameters, returns int
+        public int getMinHeight(){
+                return recursiveMinHeight(root);
+        }
+
+        //recursiveMinHeight function called by getMinHeight. Takes TreeNode as parameter, returns int
+        private int recursiveMinHeight(TreeNode node){
+                if (node == null)
+                        return 0;
+                return Math.min(recursiveMinHeight(node.getLeft()), recursiveMinHeight(node.getRight())) + 1;
+        }
+
+        //recursiveMaxHeight function called by getMaxHeight. Takes TreeNode as parameter, returns int
+        private int recursiveMaxHeight(TreeNode node){
+                if (node == null)
+                        return 0;
+                return Math.max(recursiveMaxHeight(node.getLeft()), recursiveMaxHeight(node.getRight())) + 1;
+        }
+
+        //getMaxHeight function returns max height of leaves on the tree. Takes no parameters, returns int
+        public int getMaxHeight(){
+                return recursiveMaxHeight(root);
+        }
+
+        //size function returns number of nodes in tree. Takes no parameters, returns int
         public int size(){
                 return size;
+        }
+
+        /***********************STILL TO CODE*****************************/
+
+        //get function takes key, returns first node found that matches that key
+        public TreeNode get(double key){
+                return null;
+
+        }
+
+        //get function takes key, identifier as parameters, returns first matching 
+        public TreeNode get(double key, double inputIdentifier){
+                return null;
+
+        }
+
+        //delete function takes key, deletes first node matching that key
+        public void delete(double inputKey){
+
+        }
+
+        //delete function takes key, identifier, deletes first node matching them
+        public void delete (double inputKey, double identifier){
+
+        }
+
+        //contains function searches tree for specified key, returns appropriate boolean value
+        public boolean contains (double key){
+                return false;
+        }
+
+        //contains function searches tree for specified node, reutrns appropriate boolean value
+        public boolean contains (TreeNode node){
+                return false;
+        }
+
+        public void printInOrder(){
+
         }
 
 

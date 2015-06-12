@@ -7,12 +7,10 @@
 
         /*
 
-        Description:    A RouletteWheel for easy roulette selection in genetic algorithms. Constructor takes an ArrayList of fitness keys,
-        				which are used to form a wheel of probabilities. The selectKey() and selectAndRemove() methods generate a random
-        				key and return the index of the corresponding individual. The remove() and selectAndRemove() methods remove an individual
-        				(the latter after it has been selected) and reconstruct the wheel. Class tracks sum of fitnesses and includes basic
-        				ArrayList functionality for the wheel. Class can also be used for general probabilistic selection and roulette wheel
-        				functionality.
+        Description:    Java contains no BinaryTree object, which requires building new structures or modifying old ones whenever such a tree is needed.
+        				This TreeNode class intends to serve as a basic BST node that can be easily adjusted to contain any type of object. Finished 
+        				product will have all user-functionality of a standard Java class. This is currently a work in progress and is not ready
+        				for general use.
 
         				Copyright 2015, Andrew Miller-Smith. Class is free for non-commercial use. For commercial use, inquire at amillers@bowdoin.edu.
 
@@ -32,7 +30,7 @@ public class TreeNode {
 	private final int INITIAL_IDENTIFIER = Integer.MIN_VALUE;
 	private final double INITIAL_VALUE = Double.NEGATIVE_INFINITY;
 
-	//variables contained in each node
+	//variables contained in each node. Identifier can be used to distinguish between nodes sharing the same data
 	private double key;
 	private double value;
 	private int height;
@@ -107,10 +105,10 @@ public class TreeNode {
 
 		//find if node is parent's right or left child
 		if (parent != null){
-			if (parent.getLeft().equals(this)){
+			if (parent.getLeft() != null && parent.getLeft().equals(this)){
 				parent.setLeft(null);
 			}
-			else if(parent.getRight().equals(this)){
+			else if(parent.getRight() != null && parent.getRight().equals(this)){
 				parent.setRight(null);
 			}
 		}
@@ -125,6 +123,27 @@ public class TreeNode {
 		parent = null;
 		left = null;
 		right = null;
+	}
+
+	//copyAll function copies all values and parents/children from the input node into our node
+	public void copyAll(TreeNode node){
+
+		key = node.getKey();
+		value = node.getValue();
+		height = node.getHeight();
+		identifier = node.getIdentifier();
+		parent = node.getParent();
+		right = node.getRight();
+		left = node.getLeft();
+	}
+
+	//copyValues function copies all values from input node but keeps parents/children
+	public void copyValues(TreeNode node){
+
+		key = node.getKey();
+		value = node.getValue();
+		height = node.getHeight();
+		identifier = node.getIdentifier();
 	}
 
 

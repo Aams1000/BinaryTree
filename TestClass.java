@@ -22,24 +22,30 @@ public class TestClass {
 	private static final int NUM_VALUES = 20;
 	private static final int MAX_VALUE = 50;
 	private static final int NUM_TESTS = 1000;
+	private static final int NUM_NODES = 8;
+
+	//ArrayList for nodes in tree
+	private static final ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
 
 	public static void main(String[] args){
 
 		//test TreeNode constructors
-		TreeNode node = new TreeNode();
-		TreeNode secondNode = new TreeNode(5, 10);
-		TreeNode thirdNode = new TreeNode(4, 4, 15);
-		secondNode.setParent(thirdNode);
-		thirdNode.setLeft(secondNode);
-		secondNode.getParent().print();
-		thirdNode.getLeft().print();
-		secondNode.detach();
-		if (secondNode.getParent() == null){
-			System.out.println("SecondNode parent is null.");
-		}
-		if (thirdNode.getLeft() == null){
-			System.out.println("ThirdNode left is null.");
-		}
+		// TreeNode node = new TreeNode();
+		// TreeNode secondNode = new TreeNode(5, 10);
+		TreeNode thirdNode = new TreeNode(25, 25, 50);
+		// secondNode.setParent(thirdNode);
+		// thirdNode.setLeft(secondNode);
+		// secondNode.getParent().print();
+		// thirdNode.getLeft().print();
+		// secondNode.detach();
+		// if (secondNode.getParent() == null){
+		// 	System.out.println("SecondNode parent is null.");
+		// }
+		// if (thirdNode.getLeft() == null){
+		// 	System.out.println("ThirdNode left is null.");
+		// }
+
+		//testing print function, getters and setters
 		//node.print();
 		// secondNode.print();
 		// thirdNode.print();
@@ -50,12 +56,61 @@ public class TestClass {
 		// node.setParent(secondNode);
 		// node.getParent().print();
 
-		// BinaryTree tree = new BinaryTree();
-		// tree.insert(secondNode);
-		// tree.insert(thirdNode);
-		// thirdNode.getParent().print();
-		// secondNode.getLeft().print();
-		//tree.delete(secondNode);
+		BinaryTree tree = new BinaryTree();
+		
+		//testing insertion
+		tree.insert(thirdNode);
+		//generate NUM_NODES random nodes
+		for (int i = 0; i < NUM_NODES; i++){
+			TreeNode randomNode = generateNode();
+			tree.insert(randomNode);
+			nodes.add(randomNode);
+			System.out.println("Node key: " + randomNode.getKey());
+			// randomNode.print();
+			// System.out.println("Parent: ");
+			// randomNode.getParent().print();
+		}
+		// System.out.println("Tree size: " + tree.size());
+		// TreeNode root = tree.getRoot();
+		// root.print();
+		// tree.delete(thirdNode);
+		// System.out.println("Tree size: " + tree.size());
+		// root = tree.getRoot();
+		// root.print();
+
+		//testing height functions
+		System.out.println("Max height: " + tree.getMaxHeight());
+		System.out.println("Min height: " + tree.getMinHeight());
+		if (tree.isHeightBalanced()){
+			System.out.println("Tree is height balanced.");
+		}
+		else{
+			System.out.println("Tree is not height balanced.");
+		}
+
+
+		//testing deletion
+	// 	for (int i = 0; i < NUM_NODES; i++){
+	// 		nodes.get(i).print();
+	// 		tree.delete(nodes.get(i));
+	// 		System.out.println("Tree size: " + tree.size());
+	// 	}
+
+	// 	if (tree.getRoot() == null){
+	// 			System.out.println("Root is null.");
+	// 		}
+
+	}
+
+	public static TreeNode generateNode(){
+
+		double randomKey = random.nextDouble()*MAX_VALUE;
+		double randomValue = random.nextDouble()*MAX_VALUE;
+		int randomIdentifier = random.nextInt();
+		TreeNode randomNode = new TreeNode(randomKey, randomValue, randomIdentifier);
+		//randomNode.print();
+		return randomNode;
+	
 	}
 
 	/* THE CAKE IS A LIE. */
