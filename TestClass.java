@@ -22,7 +22,7 @@ public class TestClass {
 	private static final int NUM_VALUES = 20;
 	private static final int MAX_VALUE = 50;
 	private static final int NUM_TESTS = 1000;
-	private static final int NUM_NODES = 8;
+	private static final int NUM_NODES = 10;
 
 	//ArrayList for nodes in tree
 	private static final ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
@@ -60,15 +60,14 @@ public class TestClass {
 		
 		//testing insertion
 		tree.insert(thirdNode);
+		//nodes.add(thirdNode);
 		//generate NUM_NODES random nodes
 		for (int i = 0; i < NUM_NODES; i++){
 			TreeNode randomNode = generateNode();
 			tree.insert(randomNode);
 			nodes.add(randomNode);
-			System.out.println("Node key: " + randomNode.getKey());
-			// randomNode.print();
-			// System.out.println("Parent: ");
-			// randomNode.getParent().print();
+			//System.out.println("Node key: " + randomNode.getKey());
+			randomNode.print();
 		}
 		// System.out.println("Tree size: " + tree.size());
 		// TreeNode root = tree.getRoot();
@@ -79,26 +78,29 @@ public class TestClass {
 		// root.print();
 
 		//testing height functions
-		System.out.println("Max height: " + tree.getMaxHeight());
-		System.out.println("Min height: " + tree.getMinHeight());
-		if (tree.isHeightBalanced()){
-			System.out.println("Tree is height balanced.");
-		}
-		else{
-			System.out.println("Tree is not height balanced.");
-		}
+		// System.out.println("Max height: " + tree.getMaxHeight());
+		// System.out.println("Min height: " + tree.getMinHeight());
+		// if (tree.isHeightBalanced()){
+		// 	System.out.println("Tree is height balanced.");
+		// }
+		// else{
+		// 	System.out.println("Tree is not height balanced.");
+		// }
 
 
 		//testing deletion
-	// 	for (int i = 0; i < NUM_NODES; i++){
-	// 		nodes.get(i).print();
-	// 		tree.delete(nodes.get(i));
-	// 		System.out.println("Tree size: " + tree.size());
-	// 	}
 
-	// 	if (tree.getRoot() == null){
-	// 			System.out.println("Root is null.");
-	// 		}
+
+
+		for (int i = 0; i < NUM_NODES; i++){
+			// nodes.get(i).print();
+			if (tree.getRoot().equals(nodes.get(i))){
+				System.out.println("Removing root.");
+			}
+			// System.out.println(i + "th deletion.");
+			// tree.getRoot().print();
+			tree.delete(nodes.get(i));
+		}
 
 	}
 
@@ -106,7 +108,7 @@ public class TestClass {
 
 		double randomKey = random.nextDouble()*MAX_VALUE;
 		double randomValue = random.nextDouble()*MAX_VALUE;
-		int randomIdentifier = random.nextInt();
+		int randomIdentifier = random.nextInt() % MAX_VALUE;
 		TreeNode randomNode = new TreeNode(randomKey, randomValue, randomIdentifier);
 		//randomNode.print();
 		return randomNode;

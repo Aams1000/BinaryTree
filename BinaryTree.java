@@ -99,17 +99,14 @@ public class BinaryTree{
                 }
                 node.appearsUninitialized();
                 recursiveDelete(root, node);
-                size--;
         }
 
         //recursiveDelete function called by delete function. Takes node to delete and current node to examine as parameters
         //traverses tree until finding the appropriate to insert node
         private void recursiveDelete(TreeNode curr, TreeNode node){
-                
-                if (curr == null){
-                        System.out.println("Error: trying to delete null node.");
-                        return;
-                }
+
+                System.out.println("Current key: " + curr.getKey() + " Node key: " + node.getKey());
+
                 if (node == null){
                         System.out.println ("Error: node to delete is null.");
                 }
@@ -120,13 +117,21 @@ public class BinaryTree{
                 }
                 //recurse either on right or left child
                 else if (node.getKey() <= curr.getKey() && curr.getLeft() != null){
+                        if (curr.getLeft() == null){
+                                System.out.println("Got past null left check.");
+                        }
                         recursiveDelete(curr.getLeft(), node);
                 }
                 else if (node.getKey() > curr.getKey() && curr.getRight() != null){
+                        if (curr.getRight() == null){
+                                System.out.println("Got past null right check.");
+                        }
                         recursiveDelete(curr.getRight(), node);
                 }
                 else{ //error
                         System.out.println("Error: node not contained in tree.");
+                        //curr.print();
+                        node.print();
                 }
         }
 
@@ -145,7 +150,7 @@ public class BinaryTree{
                                 while (curr.getLeft() != null){
                                         curr = curr.getLeft();
                                 }
-                                node.copyValues(curr);
+                                root.copyValues(curr);
                                 curr.detach();
                                 return;
                         }
@@ -158,6 +163,8 @@ public class BinaryTree{
                         //tree contains only root
                         else{
                                 root = null;
+                                System.out.println("Deleting root.");
+                                node.print();
                                 return;
                         }
                 }
@@ -170,20 +177,24 @@ public class BinaryTree{
                         //replace node with child
                         if (parent.getLeft() != null && parent.getLeft().equals(node)){
                                 parent.setLeft(left);
+                                left.setParent(parent);
                         }
                         else{
                                 parent.setRight(left);
+                                left.setParent(parent);
                         }
                         node.detach();
                 }
                 //node has one right child
                 else if (left == null){
                         //replace node with child
-                        if (parent.getLeft().equals(node)){
+                        if (parent.getLeft() != null && parent.getLeft().equals(node)){
                                 parent.setLeft(right);
+                                right.setParent(parent);
                         }
                         else{
                                 parent.setRight(right);
+                                right.setParent(parent);
                         }
                         node.detach();
                 }
@@ -195,7 +206,13 @@ public class BinaryTree{
                                 curr = curr.getLeft();
                         }
                         node.copyValues(curr);
-                        curr.detach();
+
+                        //remove curr properly
+                        if (curr.getRight() != null){
+                                curr.getParent().setLeft(curr.getRight());
+                                curr.getRight().setParent(curr.getParent());
+                                curr.detach();
+                        }
                 }
         }
 
