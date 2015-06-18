@@ -22,7 +22,7 @@ public class TestClass {
 	private static final int NUM_VALUES = 20;
 	private static final int MAX_VALUE = 50;
 	private static final int NUM_TESTS = 1000;
-	private static final int NUM_NODES = 10;
+	private static final int NUM_NODES = 5;
 
 	//ArrayList for nodes in tree
 	private static final ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
@@ -69,6 +69,15 @@ public class TestClass {
 			//System.out.println("Node key: " + randomNode.getKey());
 			randomNode.print();
 		}
+
+		//test for null parents
+		for (int i = 0; i < nodes.size(); i++){
+			if (nodes.get(i).getParent() == null){
+				System.out.println("PARENT IS NULL:");
+				nodes.get(i).print();
+				return;
+			}
+		}
 		// System.out.println("Tree size: " + tree.size());
 		// TreeNode root = tree.getRoot();
 		// root.print();
@@ -88,20 +97,27 @@ public class TestClass {
 		// }
 
 
-		//testing deletion
-
-
-
+		//testing root reassignment and deletion
 		for (int i = 0; i < NUM_NODES; i++){
-			// nodes.get(i).print();
-			if (tree.getRoot().equals(nodes.get(i))){
-				System.out.println("Removing root.");
-			}
-			// System.out.println(i + "th deletion.");
-			// tree.getRoot().print();
-			tree.delete(nodes.get(i));
+			TreeNode root = tree.getRoot();
+			tree.delete(root);
 		}
 
+		//testing deletion
+		// for (int i = 0; i < NUM_NODES; i++){
+		// 	// nodes.get(i).print();
+		// 	if (nodes.get(i).getParent() == null){
+		// 		System.out.println("PARENT IS NULL:");
+		// 		nodes.get(i).print();
+		// 		break;
+		// 	}
+		// 	if (tree.getRoot().equals(nodes.get(i))){
+		// 		System.out.println("Removing root.");
+		// 	}
+		// 	// System.out.println(i + "th deletion.");
+		// 	// tree.getRoot().print();
+		// 	tree.delete(nodes.get(i));
+		// }
 	}
 
 	public static TreeNode generateNode(){

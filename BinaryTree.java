@@ -56,13 +56,15 @@ public class BinaryTree{
                         return;
                 }
 
-                //insert node to important
+                //insert node with recursveInsert function
                 recursiveInsert(root, node);
         }
 
         //recursiveInsert function called by insert function. Takes node to insert and current node to examine as parameters
         //traverses tree until finding the appropriate location to insert node
         private void recursiveInsert(TreeNode curr, TreeNode newNode){
+
+                System.out.println("Current key: " + curr.getKey() + " Node key: " + newNode.getKey());
 
                 //if newNode's key is less than or equal to curr's key
                 if (newNode.getKey() <= curr.getKey()){        
@@ -73,6 +75,7 @@ public class BinaryTree{
                                 size++;
                         }            
                         else{
+                                System.out.println("Going left.");
                                 recursiveInsert(curr.getLeft(), newNode);
                         }
                 }
@@ -84,6 +87,7 @@ public class BinaryTree{
                                 size++;
                         }
                         else{
+                                System.out.println("Going right.");
                                 recursiveInsert(curr.getRight(), newNode);
                         }
                 }
@@ -120,18 +124,24 @@ public class BinaryTree{
                         if (curr.getLeft() == null){
                                 System.out.println("Got past null left check.");
                         }
+                        System.out.println("Going left.");
                         recursiveDelete(curr.getLeft(), node);
                 }
                 else if (node.getKey() > curr.getKey() && curr.getRight() != null){
                         if (curr.getRight() == null){
                                 System.out.println("Got past null right check.");
                         }
+                        System.out.println("Going right.");
                         recursiveDelete(curr.getRight(), node);
                 }
                 else{ //error
                         System.out.println("Error: node not contained in tree.");
                         //curr.print();
                         node.print();
+
+                        for (int i = 0; i < 100000; i++){
+                                System.out.println("ERROR.");
+                        }
                 }
         }
 
@@ -143,33 +153,55 @@ public class BinaryTree{
                 TreeNode left = node.getLeft();
                 TreeNode right = node.getRight();
                 //node is root
-                if (parent == null){
+                if (node.equals(root)){
+
+                        System.out.println("Deleting root.");
                         if (right != null){
+                                System.out.println("Going right.");
                                 //replace root with leftmost child of right subtree
                                 TreeNode curr = right;
                                 while (curr.getLeft() != null){
                                         curr = curr.getLeft();
                                 }
+                                root.print();
+                                curr.print();
                                 root.copyValues(curr);
-                                curr.detach();
+                                root.print();
+                                //remove curr properly
+                                if (curr.getRight() != null){
+                                        if (curr.getParent().getLeft() != null && curr.getParent().getLeft().equals(curr)){
+                                                curr.getParent().setLeft(curr.getRight());
+                                                curr.getRight().setParent(curr.getParent());
+                                                // curr.detach();      
+                                        }
+                                        // else{
+                                        //         curr.getParent().setRight(curr.getRight())
+                                        // }
+                                        else{
+                                                curr.getParent().setRight(curr.getRight());
+                                                curr.getRight().setParent(curr.getParent());
+                                                // curr.detach();
+                                        }
+                                        //curr.detach();
+                                }
                                 return;
                         }
                         //make left child the root
                         else if (left != null){
                                 root = left;
                                 node.detach();
+                                System.out.println("Going left.");
                                 return;
                         }
                         //tree contains only root
                         else{
+                                System.out.println("Tree contains only root.");
                                 root = null;
-                                System.out.println("Deleting root.");
-                                node.print();
                                 return;
                         }
                 }
                 //node has no children
-                if (left == null && right == null){
+                else if (left == null && right == null){
                         node.detach();
                 }
                 //node has one left child
@@ -183,7 +215,7 @@ public class BinaryTree{
                                 parent.setRight(left);
                                 left.setParent(parent);
                         }
-                        node.detach();
+                        //node.detach();
                 }
                 //node has one right child
                 else if (left == null){
@@ -196,11 +228,11 @@ public class BinaryTree{
                                 parent.setRight(right);
                                 right.setParent(parent);
                         }
-                        node.detach();
+                        //node.detach();
                 }
                 //node has two children
                 else{
-                        //replace node with leftmost node on right subtree
+                        //replace node with leftmost right subchild
                         TreeNode curr = right;
                         while (curr.getLeft() != null){
                                 curr = curr.getLeft();
@@ -209,9 +241,20 @@ public class BinaryTree{
 
                         //remove curr properly
                         if (curr.getRight() != null){
-                                curr.getParent().setLeft(curr.getRight());
-                                curr.getRight().setParent(curr.getParent());
-                                curr.detach();
+                                if (curr.getParent().getLeft() != null && curr.getParent().getLeft().equals(curr)){
+                                        curr.getParent().setLeft(curr.getRight());
+                                        curr.getRight().setParent(curr.getParent());
+                                        // curr.detach();      
+                                }
+                                // else{
+                                //         curr.getParent().setRight(curr.getRight())
+                                // }
+                                else{
+                                        curr.getParent().setRight(curr.getRight());
+                                        curr.getRight().setParent(curr.getParent());
+                                        // curr.detach();
+                                }
+                                //curr.detach();
                         }
                 }
         }
