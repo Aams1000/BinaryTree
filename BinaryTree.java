@@ -329,8 +329,42 @@ public class BinaryTree{
                 return false;
         }
 
+        //printInOrder function prints nodes in sorted order. Takes no parameters, returns void.
         public void printInOrder(){
+                recursivePrintInOrder(root);
 
+        }
+
+        //recursivePrintInOrder function called by printInOrder function. Takes TreeNode as parameter, returns void
+        private void recursivePrintInOrder(TreeNode node){
+                if (node == null)
+                        return;
+                //print left child
+                recursivePrintInOrder(node.getLeft());
+                //print out node
+                node.print();
+                //print right child
+                recursivePrintInOrder(node.getRight());
+        }
+
+        //sort function returns an ArrayList of sorted nodes by key. Takes no parameters, returns ArrayList<TreeNode>
+        //NOTE: does not change actual tree, returns pointers to actual TreeNodes
+        public ArrayList<TreeNode> sort(){
+                ArrayList<TreeNode> sortedNodes = new ArrayList<TreeNode>();
+                recursiveSort(root, sortedNodes);
+                return sortedNodes;
+        }
+
+        //recursiveSort function called by sort function. Takes TreeNode and ArrayList<TreeNode> as parameters, returns void
+        private void recursiveSort(TreeNode node, ArrayList<TreeNode> list){
+                if (node == null)
+                        return;
+                //add left child
+                recursiveSort(node.getLeft(), list);
+                //add node
+                list.add(node);
+                //add right child
+                recursiveSort(node.getRight(), list);
         }
 
 
