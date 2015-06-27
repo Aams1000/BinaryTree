@@ -295,44 +295,9 @@ public class BinaryTree{
                 return size;
         }
 
-        /***********************STILL TO CODE*****************************/
-
-        //get function takes key, returns first node found that matches that key
-        public TreeNode get(double key){
-                return null;
-
-        }
-
-        //get function takes key, identifier as parameters, returns first matching 
-        public TreeNode get(double key, double inputIdentifier){
-                return null;
-
-        }
-
-        //delete function takes key, deletes first node matching that key
-        public void delete(double inputKey){
-
-        }
-
-        //delete function takes key, identifier, deletes first node matching them
-        public void delete (double inputKey, double identifier){
-
-        }
-
-        //contains function searches tree for specified key, returns appropriate boolean value
-        public boolean contains (double key){
-                return false;
-        }
-
-        //contains function searches tree for specified node, reutrns appropriate boolean value
-        public boolean contains (TreeNode node){
-                return false;
-        }
-
-        //printInOrder function prints nodes in sorted order. Takes no parameters, returns void.
+         //printInOrder function prints nodes in sorted order. Takes no parameters, returns void.
         public void printInOrder(){
                 recursivePrintInOrder(root);
-
         }
 
         //recursivePrintInOrder function called by printInOrder function. Takes TreeNode as parameter, returns void
@@ -367,5 +332,118 @@ public class BinaryTree{
                 recursiveSort(node.getRight(), list);
         }
 
+        //get function takes key, returns first node found that matches that key
+        //NOTE: for trees containing repeating keys, this function may not locate the node the user has in mind
+        //in this situation, the alternate get function that takes an identifier as a second parameter is recommended
+        public TreeNode get(double key){
+                //traverse tree
+                TreeNode curr = root;
+                while (curr != null){
+                        if (key == curr.getKey()){
+                                return curr;
+                        }
+                        else if (key <= curr.getKey()){
+                                curr = curr.getLeft();
+                        }
+                        else{
+                                curr = curr.getRight();
+                        }
+                }
+                return null;
+        }
 
+        //get function takes key, identifier as parameters, returns first matching 
+        public TreeNode get(double key, double inputIdentifier){
+                //traverse tree
+                TreeNode curr = root;
+                while (curr != null){
+                        if (key == curr.getKey() && inputIdentifier == curr.getIdentifier()){
+                                return curr;
+                        }
+                        else if (key <= curr.getKey()){
+                                curr = curr.getLeft();
+                        }
+                        else{
+                                curr = curr.getRight();
+                        }
+                }
+                return null;
+        }
+
+        //contains function searches tree for specified key, returns appropriate boolean value
+        public boolean contains (double key){
+                //traverse tree
+                TreeNode curr = root;
+                while (curr != null){
+                        if (key == curr.getKey()){
+                                return true;
+                        }
+                        else if (key <= curr.getKey()){
+                                curr = curr.getLeft();
+                        }
+                        else{
+                                curr = curr.getRight();
+                        }
+                }
+                return false;
+        }
+
+        //contains function searches tree for specified node, reutrns appropriate boolean value
+        public boolean contains (TreeNode node){
+                //traverse tree
+                TreeNode curr = root;
+                double key = node.getKey();
+                while (curr != null){
+                        if (curr.equals(node)){
+                                return true;
+                        }
+                        else if (key <= curr.getKey()){
+                                curr = curr.getLeft();
+                        }
+                        else{
+                                curr = curr.getRight();
+                        }
+                }
+                return false;
+        }
+
+        //contains function searches tree for specified key, returns appropriate boolean value
+        public boolean contains (double identifier, String s){
+                if (!s.equals("identifier")){
+                        System.out.println("Error: incorrect input string. To search for an identifier, the String argument must equal 'identifier.'");
+                        return false;
+                }
+                //traverse using BFS
+                Queue<TreeNode> q = new LinkedList<TreeNode>();
+                q.add(root);
+                while (q.isEmpty() == false){
+                        TreeNode curr = q.remove();
+                        //check if curr is our node
+                        if (curr.getIdentifier() == identifier)
+                                return true;
+                        //add children
+                        if (curr.getLeft() != null)
+                                q.add(curr.getLeft());
+                        if (curr.getRight() != null)
+                                q.add(curr.getRight());
+                }
+                return false;       
+        }
+
+        /***********************IN PROGRESS*****************************/
+
+
+
+
+        /***********************STILL TO CODE*****************************/
+
+        //delete function takes key, deletes first node matching that key
+        public void delete(double inputKey){
+
+        }
+
+        //delete function takes key, identifier, deletes first node matching them
+        public void delete (double inputKey, double identifier){
+
+        }
 }

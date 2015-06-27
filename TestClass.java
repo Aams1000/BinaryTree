@@ -22,7 +22,7 @@ public class TestClass {
 	private static final int NUM_VALUES = 20;
 	private static final int MAX_VALUE = 50;
 	private static final int NUM_TESTS = 1000;
-	private static final int NUM_NODES = 5;
+	private static final int NUM_NODES = 50;
 
 	//ArrayList for nodes in tree
 	private static final ArrayList<TreeNode> nodes = new ArrayList<TreeNode>();
@@ -67,57 +67,27 @@ public class TestClass {
 			tree.insert(randomNode);
 			nodes.add(randomNode);
 			//System.out.println("Node key: " + randomNode.getKey());
-			randomNode.print();
+			//randomNode.print();
 		}
 
-		//test for null parents
-		for (int i = 0; i < nodes.size(); i++){
-			if (nodes.get(i).getParent() == null){
-				System.out.println("PARENT IS NULL:");
-				nodes.get(i).print();
-				return;
-			}
-		}
-		// System.out.println("Tree size: " + tree.size());
-		// TreeNode root = tree.getRoot();
-		// root.print();
-		// tree.delete(thirdNode);
-		// System.out.println("Tree size: " + tree.size());
-		// root = tree.getRoot();
-		// root.print();
-
-		//testing height functions
-		// System.out.println("Max height: " + tree.getMaxHeight());
-		// System.out.println("Min height: " + tree.getMinHeight());
-		// if (tree.isHeightBalanced()){
-		// 	System.out.println("Tree is height balanced.");
-		// }
-		// else{
-		// 	System.out.println("Tree is not height balanced.");
-		// }
-
-
-		//testing root reassignment and deletion
-		for (int i = 0; i < NUM_NODES; i++){
-			TreeNode root = tree.getRoot();
-			tree.delete(root);
-		}
-
-		//testing deletion
+		// //testing root reassignment and deletion
 		// for (int i = 0; i < NUM_NODES; i++){
-		// 	// nodes.get(i).print();
-		// 	if (nodes.get(i).getParent() == null){
-		// 		System.out.println("PARENT IS NULL:");
-		// 		nodes.get(i).print();
-		// 		break;
-		// 	}
-		// 	if (tree.getRoot().equals(nodes.get(i))){
-		// 		System.out.println("Removing root.");
-		// 	}
-		// 	// System.out.println(i + "th deletion.");
-		// 	// tree.getRoot().print();
-		// 	tree.delete(nodes.get(i));
+		// 	TreeNode root = tree.getRoot();
+		// 	tree.delete(root);
 		// }
+
+		//testing contains functions
+		for (int i = 0; i < nodes.size(); i++){
+			if (tree.contains(nodes.get(i).getIdentifier() + 1, "identifier"))
+				System.out.println("Contains node: " + nodes.get(i).getIdentifier());
+			else
+				System.out.println("Does not contain key: " + nodes.get(i).getIdentifier());
+		}
+		if (tree.contains(thirdNode.getIdentifier(), "identifier"))
+			System.out.println("Contains identifier: " + 50);
+		else
+			System.out.println("Does not contain identifier: " + 50);
+
 	}
 
 	public static TreeNode generateNode(){
