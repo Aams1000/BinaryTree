@@ -70,6 +70,13 @@ public class TestClass {
 			//randomNode.print();
 		}
 
+		//testing root deletion
+		for (int i = 0; i < NUM_NODES + 1; i++){
+			TreeNode root = tree.getRoot();
+			root.print();
+			tree.delete(root);
+		}
+
 		// //testing root reassignment and deletion
 		// for (int i = 0; i < NUM_NODES; i++){
 		// 	TreeNode root = tree.getRoot();
@@ -77,16 +84,16 @@ public class TestClass {
 		// }
 
 		//testing contains functions
-		for (int i = 0; i < nodes.size(); i++){
-			if (tree.contains(nodes.get(i).getIdentifier() + 1, "identifier"))
-				System.out.println("Contains node: " + nodes.get(i).getIdentifier());
-			else
-				System.out.println("Does not contain key: " + nodes.get(i).getIdentifier());
-		}
-		if (tree.contains(thirdNode.getIdentifier(), "identifier"))
-			System.out.println("Contains identifier: " + 50);
-		else
-			System.out.println("Does not contain identifier: " + 50);
+		// for (int i = 0; i < nodes.size(); i++){
+		// 	if (tree.contains(nodes.get(i).getIdentifier() + 1, "identifier"))
+		// 		System.out.println("Contains node: " + nodes.get(i).getIdentifier());
+		// 	else
+		// 		System.out.println("Does not contain key: " + nodes.get(i).getIdentifier());
+		// }
+		// if (tree.contains(thirdNode.getIdentifier(), "identifier"))
+		// 	System.out.println("Contains identifier: " + 50);
+		// else
+		// 	System.out.println("Does not contain identifier: " + 50);
 
 	}
 
